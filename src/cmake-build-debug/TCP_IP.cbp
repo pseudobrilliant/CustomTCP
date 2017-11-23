@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="TCP_IP"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/cblythe/Code/TCP-IP2/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/cblythe/Code/TCP-IP2/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/cblythe/Code/TCP-IP2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/cblythe/Code/TCP-IP2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/cblythe/Code/TCP-IP2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/cblythe/Code/TCP-IP2/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/cblythe/Code/TCP-IP2/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/cblythe/Code/TCP-IP2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/cblythe/Code/TCP-IP2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/cblythe/Code/TCP-IP2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/cblythe/Code/TCP-IP2/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/cblythe/Code/TCP-IP2/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/cblythe/Code/TCP-IP2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/cblythe/Code/TCP-IP2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/cblythe/Code/TCP-IP2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="TCP_IP_Server">
+				<Option output="/home/cblythe/Code/TCP-IP2/cmake-build-debug/TCP_IP_Server" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/cblythe/Code/TCP-IP2/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/cblythe/Code/TCP-IP2/cmake-build-debug/Makefile&quot;  VERBOSE=1 TCP_IP_Server"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/cblythe/Code/TCP-IP2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/cblythe/Code/TCP-IP2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/cblythe/Code/TCP-IP2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="TCP_IP_Server/fast">
+				<Option output="/home/cblythe/Code/TCP-IP2/cmake-build-debug/TCP_IP_Server" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/cblythe/Code/TCP-IP2/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/cblythe/Code/TCP-IP2/cmake-build-debug/Makefile&quot;  VERBOSE=1 TCP_IP_Server/fast"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/cblythe/Code/TCP-IP2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/cblythe/Code/TCP-IP2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/cblythe/Code/TCP-IP2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="TCP_IP_Client">
+				<Option output="/home/cblythe/Code/TCP-IP2/cmake-build-debug/TCP_IP_Client" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/cblythe/Code/TCP-IP2/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/cblythe/Code/TCP-IP2/cmake-build-debug/Makefile&quot;  VERBOSE=1 TCP_IP_Client"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/cblythe/Code/TCP-IP2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/cblythe/Code/TCP-IP2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/cblythe/Code/TCP-IP2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="TCP_IP_Client/fast">
+				<Option output="/home/cblythe/Code/TCP-IP2/cmake-build-debug/TCP_IP_Client" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/cblythe/Code/TCP-IP2/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/cblythe/Code/TCP-IP2/cmake-build-debug/Makefile&quot;  VERBOSE=1 TCP_IP_Client/fast"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/cblythe/Code/TCP-IP2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/cblythe/Code/TCP-IP2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/cblythe/Code/TCP-IP2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/cblythe/Code/TCP-IP2/Client/Client.cpp">
+			<Option target="TCP_IP_Client"/>
+		</Unit>
+		<Unit filename="/home/cblythe/Code/TCP-IP2/Common/CustomTCP.cpp">
+			<Option target="TCP_IP_Client"/>
+		</Unit>
+		<Unit filename="/home/cblythe/Code/TCP-IP2/Common/CustomTCP.h">
+			<Option target="TCP_IP_Client"/>
+		</Unit>
+		<Unit filename="/home/cblythe/Code/TCP-IP2/Common/Protocol.cpp">
+			<Option target="TCP_IP_Server"/>
+			<Option target="TCP_IP_Client"/>
+		</Unit>
+		<Unit filename="/home/cblythe/Code/TCP-IP2/Common/Protocol.h">
+			<Option target="TCP_IP_Server"/>
+			<Option target="TCP_IP_Client"/>
+		</Unit>
+		<Unit filename="/home/cblythe/Code/TCP-IP2/Common/StandardTCP.cpp">
+			<Option target="TCP_IP_Server"/>
+		</Unit>
+		<Unit filename="/home/cblythe/Code/TCP-IP2/Common/StandardTCP.h">
+			<Option target="TCP_IP_Server"/>
+		</Unit>
+		<Unit filename="/home/cblythe/Code/TCP-IP2/Server/Server.cpp">
+			<Option target="TCP_IP_Server"/>
+		</Unit>
+		<Unit filename="/home/cblythe/Code/TCP-IP2/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

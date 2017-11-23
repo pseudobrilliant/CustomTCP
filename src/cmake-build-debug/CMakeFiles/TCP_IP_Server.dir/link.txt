@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/TCP_IP_Server.dir/Common/Protocol.cpp.o CMakeFiles/TCP_IP_Server.dir/Common/StandardTCP.cpp.o CMakeFiles/TCP_IP_Server.dir/Server/Server.cpp.o  -o TCP_IP_Server 
