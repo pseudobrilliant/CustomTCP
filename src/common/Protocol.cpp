@@ -1,68 +1,88 @@
 #include "Protocol.h"
+#include <boost/signals2.hpp>
+#include <boost/bind.hpp>
 
-Protocol::Protocol(const char* _source_ip, const char* _target_ip, int _source_port, int _target_port, int _packet_size)
+using namespace boost;
+using namespace std;
+
+Protocol::Protocol(const char* _source_ip, int _source_port, int _packet_size)
 {
 	source_ip = _source_ip;
-	target_ip = _target_ip;
 	source_port = _source_port;
-	target_port = _target_port;
 	packet_size = _packet_size;
 
 	source_socket_addr = new sockaddr_in();
 	source_socket_addr->sin_family = AF_INET;
 	source_socket_addr->sin_port = htons(source_port);
 	source_socket_addr->sin_addr.s_addr = inet_addr(source_ip);
+}
 
-	target_socket_addr = new sockaddr_in();
+void Protocol::SetTarget(const char* _target_ip, int _target_port)
+{
+    target_ip = _target_ip;
+    target_port = _target_port;
+    target_socket_addr = new sockaddr_in();
     target_socket_addr->sin_family = AF_INET;
-	target_socket_addr->sin_port = htons(target_port);
-	target_socket_addr->sin_addr.s_addr = inet_addr(target_ip);
+    target_socket_addr->sin_port = htons(target_port);
+    target_socket_addr->sin_addr.s_addr = inet_addr(target_ip);
 }
 
 void Protocol::CreateIP(iphdr *ip, const char *source, const char *target, int tcp_size)
 {
 	ip->ihl = 5;//header length
 	ip->version = 4;//version
-	ip->tos = 16; //type of service
+	ip->tos = 0; //type of service
 	ip->tot_len = sizeof(struct iphdr) + tcp_size;//total length
 	ip->id = htons(54321);
 	ip->frag_off = 0;//fragment offset
-	ip->ttl = 64;//time to live
+	ip->ttl = 255;//time to live
 	ip->protocol = IPPROTO_TCP;//protocol => TCP
 	ip->check = 0;
 	ip->saddr = inet_addr(source);
-	ip->saddr = inet_addr(target);
+	ip->daddr = inet_addr(target);
 }
 
-void Protocol::Connect()
+bool Protocol::Connect()
 {
 
 }
 
-void Protocol::Send_Packet(const char *packet, int size)
+bool Protocol::SendPacket(const char *packet, int size)
 {
-
     int ret = sendto(socket_id,packet,size,0,(struct sockaddr*)target_socket_addr,sizeof(sockaddr_in));
     if (ret > 0)
     {
-        cout << "\nSuccessfully sent message ''";
+        cout << "Successfully sent message!\n";
+		return true;
     }
     else
     {
         cout << "ERROR:Unable to send message with code \"" <<std::strerror(errno) << "\"\n";
-        return;
+        return false;
     }
 }
 
 
-void Protocol::Receive()
+int Protocol::Receive(char *buffer, int size)
 {
 
 }
 
+void Protocol::RegisterReceived(boost::function<void()> callback)
+{
+    message_received.connect(callback);
+}
+
+void Protocol::RegisterSent(boost::function<void()> callback)
+{
+    message_sent.connect(callback);
+}
+
 void Protocol::Disconnect()
 {
-
+	close(socket_id);
+	message_sent.disconnect_all_slots();
+	message_received.disconnect_all_slots();
 }
 
 unsigned short Protocol::Checksum(unsigned short *data, unsigned short  length)

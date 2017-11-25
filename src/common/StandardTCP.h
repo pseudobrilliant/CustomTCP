@@ -1,19 +1,20 @@
 #include "Protocol.h"
-
+#include <netinet/tcp.h>
 
 class StandardTCP : public  Protocol
 {
 
 
         public:
-                StandardTCP(const char *source_ip, const char *target_ip, int source_port, int target_port, int packet_size);
-                void Connect();
-                void Send();
-                void Receive();
+                StandardTCP(const char *source_ip, int source_port, int packet_size);
+                bool Connect();
+                int Receive(char *buffer, int size);
                 void Disconnect();
                 ~StandardTCP();
 
         protected:
 		void Handshake();
+
+	void ProcessMessage(char *buffer);
 };
 

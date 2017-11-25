@@ -1,5 +1,5 @@
 project(TCP_IP_Tests)
 
-include_directories(${gte)
+add_subdirectory(lib/googletest)
+add_subdirectory(tests)
 
-target_link_libraries(gtest gtest_main)

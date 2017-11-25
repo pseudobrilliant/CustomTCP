@@ -3,53 +3,40 @@
 
 using namespace std;
 
-StandardTCP::StandardTCP(const char* source_ip, const char* target_ip, int source_port, int target_port, int packet_size):
-Protocol(source_ip, target_ip, source_port, target_port, packet_size)
+StandardTCP::StandardTCP(const char* source_ip, int source_port, int packet_size):
+Protocol(source_ip, source_port, packet_size)
 {
-	Connect();
 }
 
-void StandardTCP::Connect()
+bool StandardTCP::Connect()
 {
-	//Attempts to open a raw socket to the target and set its options
-	socket_id = socket(PF_INET, SOCK_RAW,IPPROTO_TCP);
-	if(socket_id >= 0)
-	{
-		int one = 1;
-		const int * val = &one;
-		//Attempts to notify the socket that our header will be pre-included with the packet.
-		if (setsockopt(socket_id, IPPROTO_IP, IP_HDRINCL,val, sizeof(val)) >= 0
-                && bind(socket_id,(struct sockaddr*)source_socket_addr,(socklen_t )sizeof(source_socket_addr) >=0))
-		{	
-			cout << "\nSuccessfully Created and Configured Sending Socket\n";
-		}
-		else
-		{	
-			cout << "\nERROR: Unable to configure and bind socket.\n";
-            return;
-		}
-	}
-	else
-	{
-		cout << "\nERROR: Unable to open socket with code " << std::strerror(errno) << "\n";
-        return;
-	}
-
-    Receive();
+    //Attempts to open a raw socket to the target and set its options
+    socket_id = socket(PF_INET,SOCK_DGRAM,IPPROTO_TCP);
+    if(socket_id >= 0)
+    {
+        int one = 1;
+        const int * val = &one;
+        //Attempts to notify the socket that our header will be pre-included with the packet.
+        int ret = setsockopt(socket_id, IPPROTO_IP, SO_DEBUG,val, sizeof(one));
+        if (ret >= 0)
+        {
+            cout << "Successfully Created and Configured Socket\n";
+            return true;
+        }
+        else
+        {
+            cout << "ERROR: Unable to configure and bind socket\n";
+            return false;
+        }
+    }
+    else
+    {
+        cout << "ERROR: Unable to open socket with code " << std::strerror(errno)<<"\n";
+        return false;
+    }
 }
 
-void StandardTCP::Send_Packet(const char *packet, int size)
-{
-    int ret = sendto(socket_id,packet,size,0,(struct sockaddr*)source_socket_addr,sizeof(sockaddr_in) >= 0);
-	if (re > = 0)
-	{
-        cout << "\nSuccessfully sent message ''";
-	}
-
-    Receive();
-}
-
-void StandardTCP::Receive()
+int StandardTCP::Receive(char* buffer, int size)
 {
     pollfd tcpfds[1];
     int recv;
@@ -61,24 +48,52 @@ void StandardTCP::Receive()
 
     if(recv < 0)
     {
-        cout << "\nERROR: Unable to poll sockets";
+        cout << "ERROR: Unable to poll sockets\n";
     }
     else
     if(recv == 0)
     {
-        cout << "\nTimeout occurred no messages received or sent";
+        cout << "Timeout occurred no messages received or sent\n";
     }
     else
     {
-        cout << "\nMessage Received";
+        cout << "Message Received\n";
     }
 
+    return recv;
+}
+/*
+int StandardTCP::CreatePacket( char* packet, int seq, int ack_num, int offset, int syn, int ack, int urgent, int size)
+{
+    memset(packet, 0, packet_size);
+
+    iphdr *ip = (struct iphdr *) packet;
+    CreateIP(ip, source_ip, target_ip, sizeof(struct tcphdr));
+
+    tcphdr *tcp = (struct tcphdr *) (packet + sizeof(struct iphdr));
+    CreateTCP(tcp, source_port, target_port, seq,ack_num,offset,syn,ack,urgent);
+
+    tcp->checksum = Checksum((unsigned short *) packet, ip->tot_len);
+
+    return ip->tot_len;
 }
 
 
+void StandardTCP::ProcessMessage(char *buffer)
+{
+    char *packet = new char[packet_size];
+
+    tcphdr *msg = (tcphdr*)(buffer + sizeof(iphdr));
+    if(msg->ack == 1 and msg->syn == 1)
+    {
+        int size = CreatePacket(packet, 0, 0, 5, 1, 1, 0, packet_size);
+        SendPacket(packet, size);
+    }
+}*/
+
 void StandardTCP::Disconnect()
 {
-
+    Protocol::Disconnect();
 }
 
 StandardTCP::~StandardTCP()
