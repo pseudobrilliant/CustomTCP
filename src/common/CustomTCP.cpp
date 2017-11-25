@@ -8,19 +8,26 @@ Protocol(source_ip, source_port, packet_size)
 {
 }
 
-tcphdr* CustomTCP::CreateTCP(tcphdr *tcp, int source, int target, int seq, int ack_num, int offset, int syn, int ack, int urgent)
+tcphdr* CustomTCP::CreateTCP(tcphdr *tcp, unsigned short source, unsigned short target,
+                             unsigned int seq, unsigned short ack_num, unsigned short offset,
+                             unsigned short syn, unsigned short ack, unsigned short urgent)
 {
-
-	tcp->source_port = htons(source);
-	tcp->target_port = htons(target);
-	tcp->sequence_number = htons(seq);
-	tcp->ack_number = ack_num;
-	tcp->data_offset = offset;
+	tcp->source = htons(source);
+	tcp->dest = htons(target);
+	tcp->seq = htons(seq);
+	tcp->ack_seq = ack_num;
+	tcp->doff = offset;
+    tcp->res1 = 0;
+    tcp->fin = 0;
 	tcp->syn = syn;
+    tcp->rst = 0;
+    tcp->psh;
     tcp->ack = ack;
+    tcp->urg = urgent;
+    tcp->ece = 0;
+    tcp->cwr = 0;
 	tcp->window = htons(32767);
-	tcp->checksum = 0;
-	tcp->urgent = urgent;
+	tcp->check = 0;
 }
 
 bool CustomTCP::Connect()
@@ -79,7 +86,7 @@ void CustomTCP::ProcessMessage(char *buffer)
     {
         in_addr temp;
         temp.s_addr = ip->daddr;
-        SetTarget(inet_ntoa(temp),ntohs(msg->source_port));
+        SetTarget(inet_ntoa(temp),ntohs(msg->source));
         int size = CreatePacket(packet, 0, 0, 5, 1, 1, 0, packet_size);
         SendPacket(packet, size);
     }
@@ -102,7 +109,7 @@ int CustomTCP::CreatePacket(char *packet, int _seq, int _ack_num, int _offset, i
     tcphdr *tcp = (struct tcphdr *) (packet + sizeof(struct iphdr));
     CreateTCP(tcp, source_port, target_port, _seq,_ack_num,_offset,_syn,_ack,_urgent);
 
-    tcp->checksum = Checksum((unsigned short *) packet, ip->tot_len);
+    tcp->check = Checksum((unsigned short *) packet, ip->tot_len);
 
     return ip->tot_len;
 }

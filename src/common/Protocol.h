@@ -10,8 +10,9 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
-#include <netinet/ip.h>
 #include <boost/signals2/signal.hpp>
+#include <linux/ip.h>
+#include <linux/tcp.h>
 
 using namespace std;
 

@@ -1,5 +1,4 @@
 #include "Protocol.h"
-#include <netinet/tcp.h>
 
 class StandardTCP : public  Protocol
 {

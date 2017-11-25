@@ -31,7 +31,7 @@ class CustomTCPTestFixture : public testing::Test
     ~CustomTCPTestFixture(){}
 
 };
-
+/*
 TEST_F(CustomTCPTestFixture,Connecting)
 {
     EXPECT_TRUE(client->Connect());
@@ -58,7 +58,7 @@ TEST_F(CustomTCPTestFixture,CreatePacket)
     EXPECT_EQ(tcp->ack,0);
     EXPECT_EQ(tcp->syn,1);
 }
-
+*/
 
 TEST_F(CustomTCPTestFixture,Handshake)
 {
@@ -87,7 +87,7 @@ TEST_F(CustomTCPTestFixture,Handshake)
     EXPECT_STREQ(server->source_ip, server_ip);
     EXPECT_STREQ(server->target_ip, client_ip);
 }
-
+/*
 TEST_F(CustomTCPTestFixture,Sending)
 {
     client->Connect();
@@ -122,6 +122,4 @@ TEST_F(CustomTCPTestFixture,Receiving)
         EXPECT_EQ(tcp->data_offset,5);
         EXPECT_EQ(tcp->syn,1);
     }
-
-    EXPECT_LE(client->Receive(buffer,1024),0);
-}
+}*/
