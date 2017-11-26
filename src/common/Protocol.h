@@ -27,7 +27,7 @@ class Protocol
 
 		Protocol(const char *source_ip, int source_port, int packet_size);
 		~Protocol();
-		virtual bool Connect();
+		virtual bool Connect(int _timeout);
 		virtual bool SendPacket(const char *packet, int size);
 		virtual int Receive(char *buffer, int size) = 0;
 		virtual void Disconnect();
