@@ -1,3 +1,4 @@
+
 #include "Protocol.h"
 
 enum Packet_Type
@@ -12,7 +13,6 @@ enum Packet_Type
 class CustomTCP : public  Protocol
 {
     public:
-		int timeout = 0;
 		int sequence_number = 0;
 		CustomTCP(const char *source_ip, int source_port, int packet_size);
 		bool Connect(int _timeout);
@@ -33,7 +33,7 @@ protected:
                                   unsigned short ack_num, unsigned short offset, unsigned short syn, unsigned short ack,
                                   unsigned short urgent, unsigned short window_size);
 
-   unsigned short window_size;
+		unsigned short window_size;
 
 
 };

@@ -1,3 +1,6 @@
+#ifndef  PROTOCOL_H
+#define  PROTOCOL_H
+
 #include <iostream>
 #include <cstring>
 #include <cerrno>
@@ -10,7 +13,6 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
-#include <boost/signals2/signal.hpp>
 #include <linux/ip.h>
 #include <linux/tcp.h>
 
@@ -25,6 +27,8 @@ class Protocol
 		int source_port;
 		int target_port;
 
+		int timeout = 0;
+
 		Protocol(const char *source_ip, int source_port, int packet_size);
 		~Protocol();
 		virtual bool Connect(int _timeout);
@@ -34,10 +38,6 @@ class Protocol
 
         void SetTarget(const char *_target_ip, int _target_port);
 
-        typedef boost::signals2::signal<void()> signal_t;
-        void RegisterSent(boost::function<void()> callback);
-        void RegisterReceived(boost::function<void()> callback);
-
 	protected:
 
 		int packet_size;
@@ -46,9 +46,8 @@ class Protocol
 		struct sockaddr_in *source_socket_addr;
         struct sockaddr_in *target_socket_addr;
 
-        signal_t message_sent;
-        signal_t message_received;
-
 		void CreateIP(iphdr *ip, const char *source, const char *target, int tcp_size);
 		unsigned short Checksum(unsigned short *data, unsigned short length);
 };
+
+#endif

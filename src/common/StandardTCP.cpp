@@ -8,97 +8,129 @@ Protocol(source_ip, source_port, packet_size)
 {
 }
 
-bool StandardTCP::Connect()
+bool StandardTCP::Initialize(int _timeout)
 {
     //Attempts to open a raw socket to the target and set its options
-    socket_id = socket(PF_INET,SOCK_DGRAM,IPPROTO_TCP);
-    if(socket_id >= 0)
-    {
+    socket_id = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
+    if (socket_id >= 0) {
+        timeout = _timeout;
         int one = 1;
-        const int * val = &one;
+        const int *val = &one;
         //Attempts to notify the socket that our header will be pre-included with the packet.
-        int ret = setsockopt(socket_id, IPPROTO_IP, SO_DEBUG,val, sizeof(one));
-        if (ret >= 0)
+        int ret = bind(socket_id, (sockaddr *) source_socket_addr, sizeof(sockaddr_in));
+        ret &= listen(socket_id, 1);
+        socklen_t size = sizeof(sockaddr_in);
+        target_socket_addr = new sockaddr_in;
+        socket_id = accept(socket_id,(sockaddr*) target_socket_addr,&size);
+
+        if (ret >= 0 && socket_id >0)
         {
+            target_port = ntohs(target_socket_addr->sin_port);
+            target_ip = inet_ntoa(target_socket_addr->sin_addr);
+
             cout << "Successfully Created and Configured Socket\n";
             return true;
-        }
-        else
-        {
+        } else {
             cout << "ERROR: Unable to configure and bind socket\n";
             return false;
         }
-    }
-    else
-    {
-        cout << "ERROR: Unable to open socket with code " << std::strerror(errno)<<"\n";
+    } else {
+        cout << "ERROR: Unable to open socket with code " << std::strerror(errno) << "\n";
         return false;
     }
+
 }
+
+bool StandardTCP::Connect(const char* ip, int port, int _timeout)
+{
+    SetTarget(ip,port);
+    //Attempts to open a raw socket to the target and set its options
+    socket_id = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
+    if (socket_id >= 0) {
+        timeout = _timeout;
+        int one = 1;
+        const int *val = &one;
+        //Attempts to notify the socket that our header will be pre-included with the packet.
+        socklen_t size = sizeof(sockaddr_in);
+        connect(socket_id,(sockaddr*) target_socket_addr,size);
+
+        if (socket_id >=0)
+        {
+            cout << "Successfully Created and Configured Socket\n";
+            return true;
+        } else {
+            cout << "ERROR: Unable to configure and bind with code " << std::strerror(errno) << "\n";
+            return false;
+        }
+    } else {
+        cout << "ERROR: Unable to open socket with code " << std::strerror(errno) << "\n";
+        return false;
+    }
+
+}
+
+bool StandardTCP::Receive_Data()
+{
+    bool ret = false;
+    char* buffer = new char[packet_size];
+    while(Receive(buffer,packet_size))
+    {
+        cout<<"Received Data as " << buffer;
+        ret = true;
+    }
+
+    return ret;
+}
+
+bool StandardTCP::Send_Data(string data)
+{
+    const char* buff = data.c_str();
+    if(send(socket_id,buff,data.size(),0))
+    {
+        return true;
+    }
+
+    return false;
+}
+
 
 int StandardTCP::Receive(char* buffer, int size)
 {
     pollfd tcpfds[1];
-    int recv;
+    int ret;
 
     tcpfds[0].fd = socket_id;
     tcpfds[0].events = POLLIN;
 
-    recv = poll(tcpfds,1,35000);
+    ret = poll(tcpfds,1,timeout);
 
-    if(recv < 0)
+    if(ret < 0)
     {
         cout << "ERROR: Unable to poll sockets\n";
     }
     else
-    if(recv == 0)
+    if(ret == 0)
     {
         cout << "Timeout occurred no messages received or sent\n";
     }
     else
     {
         cout << "Message Received\n";
+        ret = recv(socket_id,buffer,size,0);
     }
 
-    return recv;
+    return ret;
 }
-/*
-int StandardTCP::CreatePacket( char* packet, int seq, int ack_num, int offset, int syn, int ack, int urgent, int size)
-{
-    memset(packet, 0, packet_size);
-
-    iphdr *ip = (struct iphdr *) packet;
-    CreateIP(ip, source_ip, target_ip, sizeof(struct tcphdr));
-
-    tcphdr *tcp = (struct tcphdr *) (packet + sizeof(struct iphdr));
-    CreateTCP(tcp, source_port, target_port, seq,ack_num,offset,syn,ack,urgent);
-
-    tcp->checksum = Checksum((unsigned short *) packet, ip->tot_len);
-
-    return ip->tot_len;
-}
-
-
-void StandardTCP::ProcessMessage(char *buffer)
-{
-    char *packet = new char[packet_size];
-
-    tcphdr *msg = (tcphdr*)(buffer + sizeof(iphdr));
-    if(msg->ack == 1 and msg->syn == 1)
-    {
-        int size = CreatePacket(packet, 0, 0, 5, 1, 1, 0, packet_size);
-        SendPacket(packet, size);
-    }
-}*/
 
 void StandardTCP::Disconnect()
 {
     Protocol::Disconnect();
+    close(socket_id);
 }
 
 StandardTCP::~StandardTCP()
 {
-    close(socket_id);
+    Disconnect();
 }
 
 
